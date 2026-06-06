@@ -1,0 +1,16 @@
+# Lista negra de wikilinks fantasma — usada pela skill-validar-encerramento (Check 6)
+#
+# Formato: uma ref por linha, com separador " → " indicando sugestão de substituição.
+# Linhas iniciadas com # são comentários e devem ser ignoradas pelo carregador.
+#
+# Estes wikilinks pertencem à governança privada do autor original do harness.
+# Eles existem em nós do vault dele mas NÃO resolvem em instalações OSS — viram
+# refs penduradas em qualquer projeto que os contenha.
+#
+# Para adicionar novas refs proibidas, basta inserir uma linha no formato acima.
+# A skill recarrega o arquivo a cada execução.
+
+[[memoria-operacional]] → memory/project-context.md
+[[pendencias]] → seção em docs/context/current-status.md
+[[hipoteses-abertas]] → docs/analysis/gaps-and-unknowns.md
+[[fatos-confirmados]] → docs/analysis/current-state-assessment.md

@@ -1,0 +1,46 @@
+# Innova Cortex CLI — .gitignore
+#
+# Projeto solo, fonte única nesta máquina. Decisão local (2026-06-05): versionar
+# TUDO como backup pessoal — .cortex/, código, docs/ e memory/ entram no git.
+# Exceção explícita à regra P11.1 (que ignora docs/ e memory/ por default),
+# aprovada pelo autor e registrada em docs/context/current-status.md.
+# Único material fora do git: docs/spec/ (canônica no vault — DEC-10).
+
+# --- P11.1: fora do git, sem decisão a tomar ---
+.claude/
+tasks/
+node_modules/
+logs/
+AGENTS.md
+*.pyc
+__pycache__/
+.DS_Store
+
+# --- Spec: canônica no vault, não versionada aqui (DEC-10) ---
+docs/spec/
+
+# --- Stack Node ---
+*.tgz
+coverage/
+.nyc_output/
+.npm/
+*.log
+.env
+.env.*
+.node_repl_history
+
+# --- Editores ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- SO (cross-plataforma — o CLI roda em Windows/macOS/Linux) ---
+Thumbs.db
+Desktop.ini
+
+# --- Temporários ---
+*.tmp
+.tmp/
+tmp/
