@@ -11,7 +11,7 @@
 
 ## 1. Resumo do momento atual
 
-Init Project concluído; **TASK-01, TASK-02, base da TASK-03 e TASK-04 entregues e validadas**. CLI executa o pipeline `parse → (help/version) → dispatch → render` (CRIT-20/21, REGRA-11). TASK-04: clone temporário shallow com **cleanup garantido inclusive em falha** (`withTempClone` em `src/core/clone.js`), sobre `util/git.js` (assertGitAvailable→GIT_MISSING / cloneShallow→SOURCE_UNREACHABLE) e `util/fs.js` (makeTempDir/removeDir portáveis). Verificado: erro real do git mapeado e zero temp dirs órfãos. `node --test` verde (30/30). Próximo movimento: TASK-05 (detecção de layout + cópia do núcleo).
+Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04 e TASK-05 entregues e validadas**. CLI executa o pipeline `parse → (help/version) → dispatch → render` (CRIT-20/21, REGRA-11). TASK-04: clone temporário shallow com **cleanup garantido inclusive em falha** (`withTempClone` em `src/core/clone.js`). TASK-05: **detecção de layout + cópia do núcleo** — `resolveGovernanceRoot` (CRIT-12: `cortex/` pós-v0.2.2 vs. raiz legada) e `copyGovernanceCore` (CRIT-01/REGRA-01: allowlist INCLUDE + EXCLUDE defensivo aninhado) em `src/core/source-layout.js`, sobre `copyTree` portável em `util/fs.js` (EOL preservado, sem shell — REGRA-10). `node --test` verde (38/38). Próximo movimento: TASK-06 (materialização do `CLAUDE.md`).
 
 ---
 
@@ -26,22 +26,22 @@ Init Project concluído; **TASK-01, TASK-02, base da TASK-03 e TASK-04 entregues
 
 ## 3. O que está em andamento
 
-- Nada em andamento — TASK-02 fechada. Aguardando início da TASK-04.
+- Nada em andamento — TASK-05 fechada. Aguardando início da TASK-06.
 
 ---
 
 ## 4. O que ainda falta
 
-- TASK-03 (restante): `util/git.js` ganha `lsRemote` quando o `doctor` precisar (TASK-13); `util/fs.js` ganha cópia de árvore/leitura/escrita na TASK-05+.
-- TASK-05..12: cópia do núcleo → CLAUDE.md → estrutura mínima → VERSION → escrita atômica → testes multiplataforma → publicação.
+- TASK-03 (restante): `util/git.js` ganha `lsRemote` quando o `doctor` precisar (TASK-13); `util/fs.js` ganha leitura/escrita atômica na TASK-08/09.
+- TASK-06..12: CLAUDE.md → estrutura mínima → VERSION → escrita atômica → testes multiplataforma → publicação.
 - TASK-13..16: `doctor`/`update` + publicação.
 
 ---
 
 ## 5. Prioridades do momento
 
-1. TASK-05: detecção de layout (`cortex/` vs. raiz legada) + cópia do núcleo aplicando INCLUDE/EXCLUDE (CRIT-01/12, REGRA-01) — exige expandir `util/fs.js` (copyTree) + `SourceLayout`.
-2. TASK-06/07: materialização do CLAUDE.md (template + placeholders) + estrutura mínima do projeto.
+1. TASK-06: materialização do `CLAUDE.md` a partir do template (`04-templates/template-claude-md-local.md`) + substituição de placeholders `--name`/`--objective`; placeholder visível com `<!-- TODO -->` quando ausente (CRIT-02, REGRA-04).
+2. TASK-07: estrutura mínima (`docs/context/`, `docs/analysis/`, `memory/`) sem destruir preexistente (CRIT-03/11, REGRA-05/09).
 3. Estabelecer CI multiplataforma cedo (mitiga Lacuna 1).
 
 ---
@@ -64,7 +64,7 @@ Projeto solo, fonte única nesta máquina. **Decisão do autor:** versionar **tu
 
 ## 7. Próxima ação recomendada
 
-Acionar **Create Feature → TASK-05** (detecção de layout + cópia do núcleo). Building blocks da TASK-04 prontos para consumo: `withTempClone` entrega o diretório do clone; falta o `copyTree` em `util/fs.js` + o módulo `SourceLayout` (INCLUDE_DIRS/INCLUDE_FILES_AT_ROOT/EXCLUDE_PATTERNS — REGRA-01).
+Acionar **Create Feature → TASK-06** (materialização do `CLAUDE.md`). Building blocks prontos para a composição do `init`: `withTempClone` (clone+cleanup), `resolveGovernanceRoot` (raiz da governança) e `copyGovernanceCore` (núcleo → staging). Falta materializar o `CLAUDE.md` do template (TASK-06), a estrutura mínima (TASK-07), o `VERSION` (TASK-08) e então **compor tudo no `init`** com staging atômico + guardas REGRA-07/08 (TASK-09) — só aí `init.js` deixa de ser stub.
 
 ---
 
