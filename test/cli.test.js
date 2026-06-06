@@ -45,10 +45,11 @@ test('run com comando desconhecido sai 1 com causa e ação', async () => {
   assert.match(err, /--help/);
 });
 
-test('run init (stub) despacha e sai 0', async () => {
-  const { code, out } = await runQuiet(['init']);
-  assert.equal(code, 0);
-  assert.match(out, /init/);
+test('run init no cwd com .cortex/ existente sai 1 com CORTEX_EXISTS', async () => {
+  // cwd do projeto já tem .cortex/ — init deve abortar com CORTEX_EXISTS (REGRA-07)
+  const { code, err } = await runQuiet(['init']);
+  assert.equal(code, 1);
+  assert.match(err, /update/);
 });
 
 test('run init --help mostra ajuda do comando e sai 0', async () => {
