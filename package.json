@@ -1,6 +1,6 @@
 {
   "name": "innova-cortex",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CLI que instala e versiona o .cortex/ (governança Innova Cortex) em projetos adopters.",
   "type": "module",
   "bin": {
@@ -15,7 +15,8 @@
   ],
   "scripts": {
     "start": "node bin/cli.js",
-    "test": "node --test"
+    "test": "node --test",
+    "docs": "node scripts/generate-docs.js"
   },
   "keywords": [
     "innova-cortex",

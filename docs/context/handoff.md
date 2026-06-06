@@ -6,22 +6,27 @@ Passagem de contexto para retomada da sessão: onde parou, o que está pronto e 
 - **Projeto:** innova-cortex-cli
 - **Documento:** handoff
 - **Estado:** em desenvolvimento
-- **Última atualização:** 2026-06-06 (TASK-11)
+- **Última atualização:** 2026-06-06 (TASK-12)
 - **Responsável:** Jonathan
 
 ---
 
 ## 1. Onde o trabalho parou
 
-Init Project em andamento; **TASK-01..11 entregues e validadas**. TASK-11 entregou CI multiplataforma + smoke test e2e: `.github/workflows/ci.yml` (matrix ubuntu + windows × Node 20/22) e `test/e2e.test.js` (fixture git local, sem rede). `node --test` verde (66/66). Próximo: TASK-12 (documentação + publicação). Último commit: TASK-11.
+Init Project em andamento; **TASK-01..12 entregues e validadas**. TASK-12 entregou `README.md` (install-manifest gerado de `source-layout.js`), `scripts/generate-docs.js` e bump para `0.2.0`. `node --test` verde (66/66). **Publicação pendente:** aguardando CI Windows verde → `npm publish --access public`. Próximo: TASK-13 (`doctor`). Último commit: TASK-12.
 
 ---
 
 ## 2. Última frente analisada
 
+TASK-12 via Create Feature (documentação gerada + v0.2.0):
+- `README.md` — README do npm: usage do `init`, tabela de opções, seção "O que é instalado" com marcadores `<!-- GENERATED -->`.
+- `scripts/generate-docs.js` — lê `INCLUDE_DIRS`, `INCLUDE_FILES_AT_ROOT`, `EXCLUDE_PATTERNS` de `source-layout.js` e injeta no README (CRIT-21, REGRA-01). Script: `npm run docs`.
+- `package.json` — bumped de `0.1.0` → `0.2.0`; script `"docs"` adicionado.
+
 TASK-11 via Create Feature (CI multiplataforma + smoke test e2e):
-- `.github/workflows/ci.yml` — matrix `ubuntu-latest` + `windows-latest` × Node 20/22; `npm test` em todos. `fail-fast: false` para ver todos os quadrantes.
-- `test/e2e.test.js` — smoke test com fixture git local real (sem rede): cria `cortex/` (layout v0.2.2) + `git init` + commit → `runInit({ from: fixtureDir })` com git real → verifica CRIT-01..12 (existência de `.cortex/`, CLAUDE.md, estrutura mínima, VERSION com campos, staging removido, layout detectado).
+- `.github/workflows/ci.yml` — matrix `ubuntu-latest` + `windows-latest` × Node 20/22; `npm test` em todos. `fail-fast: false`.
+- `test/e2e.test.js` — smoke test com fixture git local real (sem rede): CRIT-01..12.
 
 TASK-10 via Create Feature (saída acionável do `init`):
 - `src/core/init-flow.js` — `guardWrite(fn, dir)`: converte EACCES/EPERM → `CortexError WRITE_PERMISSION` (E-01d). Aplicado a `mkdir(destDir)`, `withTempClone` block e `rename`. `source` adicionada à linha VERSION do `CommandResult`.
@@ -56,6 +61,7 @@ TASK-04: `withTempClone` com cleanup garantido (`clone.js`); `assertGitAvailable
 - TASK-09: `init-flow.js` + `init.js` real — staging atômico, guards REGRA-07/08 (CRIT-07/08/09) — validado (63/63).
 - TASK-10: `guardWrite()` + saída acionável E-01a..e — CRIT-20, REGRA-11 — validado (65/65).
 - TASK-11: `.github/workflows/ci.yml` + `test/e2e.test.js` — CI multiplataforma + smoke test e2e (CRIT-01..12, sem rede) — validado (66/66).
+- TASK-12: `README.md` + `scripts/generate-docs.js` + bump `0.2.0` — CRIT-21, REGRA-01 — validado (66/66). Publicação pendente.
 
 ---
 
@@ -69,8 +75,9 @@ TASK-04: `withTempClone` com cleanup garantido (`clone.js`); `assertGitAvailable
 
 ## 5. Próximos passos imediatos
 
-1. Aguardar CI verde em `windows-latest` (primeiro push para o GitHub acionará `.github/workflows/ci.yml`).
-2. Com CRIT-10 satisfeito: acionar Create Feature → **TASK-12** (documentação gerada da lista-fonte + publicação v0.2.x no npm).
+1. Push → aguardar CI verde em `windows-latest` (CRIT-10 — gate de release).
+2. CI verde → `npm publish --access public` (requer `npm login` com conta autorizada).
+3. Após publicação: acionar Create Feature → **TASK-13** (`doctor`).
 
 ---
 

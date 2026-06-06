@@ -6,14 +6,14 @@ Estado vivo do projeto: o que está pronto, em andamento, pendente e qual é o p
 - **Projeto:** innova-cortex-cli
 - **Documento:** current-status
 - **Estado:** em desenvolvimento
-- **Última atualização:** 2026-06-06 (TASK-11)
+- **Última atualização:** 2026-06-06 (TASK-12)
 - **Responsável:** Jonathan
 
 ---
 
 ## 1. Resumo do momento atual
 
-Init Project em andamento; **TASK-01..11 entregues e validadas**. TASK-11: **CI multiplataforma + smoke test e2e** — `.github/workflows/ci.yml` com matrix ubuntu-latest + windows-latest × Node 20/22; `test/e2e.test.js` com fixture git local (CRIT-01..12, sem rede). `node --test` verde (66/66). Próximo movimento: TASK-12 (documentação gerada + publicação v0.2.x no npm).
+Init Project em andamento; **TASK-01..12 entregues e validadas**. TASK-12: **documentação gerada + v0.2.0** — `README.md` com install-manifest gerado de `source-layout.js` (CRIT-21, REGRA-01), `scripts/generate-docs.js`, `package.json` bumped para `0.2.0`. `node --test` verde (66/66). **Aguardando CI Windows verde para `npm publish`.** Próximo movimento: TASK-13 (`doctor`).
 
 ---
 
@@ -28,7 +28,7 @@ Init Project em andamento; **TASK-01..11 entregues e validadas**. TASK-11: **CI 
 
 ## 3. O que está em andamento
 
-- Nada em andamento — TASK-11 fechada. Aguardando início da TASK-12.
+- Nada em andamento — TASK-12 fechada. Aguardando CI Windows verde para `npm publish`.
 
 ---
 
@@ -42,8 +42,8 @@ Init Project em andamento; **TASK-01..11 entregues e validadas**. TASK-11: **CI 
 
 ## 5. Prioridades do momento
 
-1. TASK-12: documentação gerada da lista-fonte + publicação v0.2.x no npm. CRIT-10 (Windows nativo) coberto pelo CI — gate satisfeito assim que o CI passar em `windows-latest`.
-2. TASK-13..16: `doctor`/`update` (fase posterior ao `init` validado em uso real).
+1. `npm publish` (manual) — assim que CI Windows verde confirmar CRIT-10. Comando: `npm publish --access public`.
+2. TASK-13: `doctor` — leitura do `VERSION` + `ls-remote` + diff de arquivos modificados localmente.
 
 ---
 
@@ -65,7 +65,7 @@ Projeto solo, fonte única nesta máquina. **Decisão do autor:** versionar **tu
 
 ## 7. Próxima ação recomendada
 
-Acionar **Create Feature → TASK-12** (documentação gerada da lista-fonte + publicação v0.2.x). Antes de publicar: aguardar CI verde em `windows-latest` (CRIT-10 — gate de release). Se CI verde, avançar para `npm publish`.
+Fazer push → aguardar CI verde em `windows-latest` (CRIT-10) → rodar `npm publish --access public`. Após publicação confirmada, acionar **Create Feature → TASK-13** (`doctor`).
 
 ---
 
