@@ -19,6 +19,29 @@ async function readPackageVersion() {
 }
 
 /**
+ * Executa `fn` convertendo EACCES/EPERM em {@link CortexError} WRITE_PERMISSION
+ * (E-01d, REGRA-08): erro de permissão vira mensagem clara + ação, não stack trace.
+ * @template T
+ * @param {() => Promise<T>} fn
+ * @param {string} dir caminho afetado (para a mensagem de erro)
+ * @returns {Promise<T>}
+ */
+async function guardWrite(fn, dir) {
+  try {
+    return await fn();
+  } catch (err) {
+    if (err?.code === 'EACCES' || err?.code === 'EPERM') {
+      throw new CortexError(
+        ErrorCode.WRITE_PERMISSION,
+        `Sem permissão de escrita em ${dir}.`,
+        'Verifique as permissões do diretório e tente novamente.',
+      );
+    }
+    throw err;
+  }
+}
+
+/**
  * Orquestra o pipeline completo do `init` (CASO-01):
  *
  * 1. Guard REGRA-07: aborta se `.cortex/` já existe (E-01c).
@@ -49,30 +72,33 @@ export async function runInit(
     );
   }
 
-  await mkdir(destDir, { recursive: true });
+  await guardWrite(() => mkdir(destDir, { recursive: true }), destDir);
 
   const version = cliVersion ?? await readPackageVersion();
   const stagingCortex = join(destDir, '.cortex_staging');
 
   let initResult;
   try {
-    initResult = await withTempClone({ from: source, ref }, async (cloneDir) => {
-      const governanceRoot = resolveGovernanceRoot(cloneDir);
-      const copied = await copyGovernanceCore(governanceRoot, stagingCortex);
-      const commit = await git.revParseHead(cloneDir);
-      const record = buildVersionRecord({
-        source,
-        ref: ref || 'latest',
-        commit,
-        installedAt: new Date().toISOString(),
-        cliVersion: version,
-      });
-      await writeVersion(stagingCortex, record);
-      return { copied, record };
-    }, { git });
+    initResult = await guardWrite(
+      () => withTempClone({ from: source, ref }, async (cloneDir) => {
+        const governanceRoot = resolveGovernanceRoot(cloneDir);
+        const copied = await copyGovernanceCore(governanceRoot, stagingCortex);
+        const commit = await git.revParseHead(cloneDir);
+        const record = buildVersionRecord({
+          source,
+          ref: ref || 'latest',
+          commit,
+          installedAt: new Date().toISOString(),
+          cliVersion: version,
+        });
+        await writeVersion(stagingCortex, record);
+        return { copied, record };
+      }, { git }),
+      destDir,
+    );
 
     // Rename atômico: staging → .cortex/ (mesmo filesystem — REGRA-08)
-    await rename(stagingCortex, cortexDir);
+    await guardWrite(() => rename(stagingCortex, cortexDir), destDir);
   } finally {
     // Cleanup idempotente: se rename ok, dir já não existe; se falhou, limpa
     await removeDir(stagingCortex);
@@ -91,7 +117,7 @@ export async function runInit(
       created.length > 0
         ? `estrutura mínima criada: ${created.join(', ')}`
         : 'estrutura mínima: já existente',
-      `VERSION: ${record.ref} @ ${record.commit}`,
+      `VERSION: ${record.ref} @ ${record.commit} — ${source}`,
     ],
     location: destDir,
     nextStep: 'Abra o projeto no seu editor e chame o agente para começar.',

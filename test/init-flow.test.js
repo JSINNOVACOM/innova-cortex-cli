@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
-import { mkdir, writeFile, readFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile, chmod } from 'node:fs/promises';
 import { join } from 'node:path';
 import { makeTempDir, removeDir } from '../src/util/fs.js';
 import { runInit } from '../src/core/init-flow.js';
@@ -179,6 +179,53 @@ test('cria destDir e estrutura mínima quando destDir não existe (CRIT-03, REGR
     assert.equal(existsSync(join(destDir, 'docs', 'context')), true);
     assert.equal(existsSync(join(destDir, 'docs', 'analysis')), true);
     assert.equal(existsSync(join(destDir, 'memory')), true);
+  } finally {
+    await removeDir(base);
+  }
+});
+
+// --- E-01d: permissão de escrita ---
+
+test('E-01d: CortexError WRITE_PERMISSION quando dir pai é read-only (CRIT-08, REGRA-08)',
+  { skip: process.platform === 'win32' || process.getuid?.() === 0 },
+  async () => {
+    const base = await makeTempDir();
+    try {
+      await chmod(base, 0o444); // read-only — não permite criar subdiretórios
+      const destDir = join(base, 'novo-proj'); // não existe; mkdir falhará com EACCES
+
+      await assert.rejects(
+        () => runInit({ dest: destDir }, { git: makeMockGit(), cliVersion: '0.1.0' }),
+        (err) => err instanceof CortexError && err.code === ErrorCode.WRITE_PERMISSION,
+      );
+    } finally {
+      await chmod(base, 0o755); // restaura para o cleanup
+      await removeDir(base);
+    }
+  },
+);
+
+// --- E-01e: destino não vazio sem .cortex/ ---
+
+test('E-01e: output sinaliza o que foi preservado quando destino não está vazio (CRIT-11)', async () => {
+  const base = await makeTempDir();
+  try {
+    const destDir = join(base, 'proj');
+    await mkdir(join(destDir, 'memory'), { recursive: true });
+    await writeFile(join(destDir, 'CLAUDE.md'), 'custom\n', 'utf8');
+    await writeFile(join(destDir, 'memory', 'notes.md'), 'notas\n', 'utf8');
+
+    const result = await runInit(
+      { dest: destDir },
+      { git: makeMockGit(), cliVersion: '0.1.0' },
+    );
+
+    assert.equal(result.ok, true);
+    // CLAUDE.md preservado deve aparecer nas actions
+    assert.ok(result.actions.some((a) => a.includes('preservado')), 'esperado "preservado" nas actions');
+    // Arquivo preexistente em memory/ não deve ter sido destruído
+    const notes = await readFile(join(destDir, 'memory', 'notes.md'), 'utf8');
+    assert.equal(notes, 'notas\n');
   } finally {
     await removeDir(base);
   }
