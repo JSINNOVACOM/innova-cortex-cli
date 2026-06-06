@@ -4,14 +4,14 @@
 - **Projeto:** innova-cortex-cli
 - **Documento:** current-status
 - **Estado:** em desenvolvimento
-- **Última atualização:** 2026-06-05
+- **Última atualização:** 2026-06-06
 - **Responsável:** Jonathan
 
 ---
 
 ## 1. Resumo do momento atual
 
-Init Project concluído; **TASK-01 (bootstrap), TASK-02 (parse + dispatch) e a base da TASK-03 (errors/output) entregues e validadas**. CLI executa o pipeline `parse → (help/version) → dispatch → render`: `--version`, `--help` (global e por-comando, gerado do registry — CRIT-21), comandos `init`/`doctor`/`update` (stubs com saída acionável — CRIT-20), erros com causa+ação (REGRA-11). `node --test` verde (22/22). Modelagem registrada em `docs/features/cli-parse-dispatch.md`. Próximo movimento: TASK-04 (clone temporário) — início da lógica real de `init`.
+Init Project concluído; **TASK-01, TASK-02, base da TASK-03 e TASK-04 entregues e validadas**. CLI executa o pipeline `parse → (help/version) → dispatch → render` (CRIT-20/21, REGRA-11). TASK-04: clone temporário shallow com **cleanup garantido inclusive em falha** (`withTempClone` em `src/core/clone.js`), sobre `util/git.js` (assertGitAvailable→GIT_MISSING / cloneShallow→SOURCE_UNREACHABLE) e `util/fs.js` (makeTempDir/removeDir portáveis). Verificado: erro real do git mapeado e zero temp dirs órfãos. `node --test` verde (30/30). Próximo movimento: TASK-05 (detecção de layout + cópia do núcleo).
 
 ---
 
@@ -32,16 +32,16 @@ Init Project concluído; **TASK-01 (bootstrap), TASK-02 (parse + dispatch) e a b
 
 ## 4. O que ainda falta
 
-- TASK-03 (restante): `util/fs.js` e `util/git.js` — contratos já modelados em `docs/features/cli-parse-dispatch.md`, implementação adiada para quando o `init` precisar (TASK-04+).
-- TASK-04..12: lógica real do `init` (clone → cópia do núcleo → CLAUDE.md → VERSION) + testes multiplataforma + publicação.
+- TASK-03 (restante): `util/git.js` ganha `lsRemote` quando o `doctor` precisar (TASK-13); `util/fs.js` ganha cópia de árvore/leitura/escrita na TASK-05+.
+- TASK-05..12: cópia do núcleo → CLAUDE.md → estrutura mínima → VERSION → escrita atômica → testes multiplataforma → publicação.
 - TASK-13..16: `doctor`/`update` + publicação.
 
 ---
 
 ## 5. Prioridades do momento
 
-1. TASK-04: clone temporário shallow na `ref` + cleanup garantido (CRIT-06, E-01b) — primeiro pedaço de lógica real, exige `util/git.js`.
-2. TASK-05: detecção de layout + cópia do núcleo (CRIT-01/12, REGRA-01) — exige `util/fs.js` + `SourceLayout`.
+1. TASK-05: detecção de layout (`cortex/` vs. raiz legada) + cópia do núcleo aplicando INCLUDE/EXCLUDE (CRIT-01/12, REGRA-01) — exige expandir `util/fs.js` (copyTree) + `SourceLayout`.
+2. TASK-06/07: materialização do CLAUDE.md (template + placeholders) + estrutura mínima do projeto.
 3. Estabelecer CI multiplataforma cedo (mitiga Lacuna 1).
 
 ---
@@ -64,7 +64,7 @@ Projeto solo, fonte única nesta máquina. **Decisão do autor:** versionar **tu
 
 ## 7. Próxima ação recomendada
 
-Acionar **Create Feature → TASK-04** (clone temporário shallow + cleanup garantido), implementando antes o `util/git.js` cujo contrato já está modelado em `docs/features/cli-parse-dispatch.md` (seção 7).
+Acionar **Create Feature → TASK-05** (detecção de layout + cópia do núcleo). Building blocks da TASK-04 prontos para consumo: `withTempClone` entrega o diretório do clone; falta o `copyTree` em `util/fs.js` + o módulo `SourceLayout` (INCLUDE_DIRS/INCLUDE_FILES_AT_ROOT/EXCLUDE_PATTERNS — REGRA-01).
 
 ---
 

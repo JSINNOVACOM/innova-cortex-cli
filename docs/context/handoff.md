@@ -4,52 +4,53 @@
 - **Projeto:** innova-cortex-cli
 - **Documento:** handoff
 - **Estado:** em desenvolvimento
-- **Última atualização:** 2026-06-05
+- **Última atualização:** 2026-06-06
 - **Responsável:** Jonathan
 
 ---
 
 ## 1. Onde o trabalho parou
 
-Init Project concluído; **TASK-01, TASK-02 e a base da TASK-03 entregues e validadas**. CLI roda o pipeline completo de parse/dispatch/saída; `node --test` verde (22/22). Pronto para a TASK-04 (início da lógica real do `init`).
+Init Project concluído; **TASK-01, TASK-02, base da TASK-03 e TASK-04 entregues e validadas**. CLI roda o pipeline de parse/dispatch/saída + clone temporário shallow com cleanup garantido; `node --test` verde (30/30). Pronto para a TASK-05 (detecção de layout + cópia do núcleo). Primeiro commit feito (`9f16d52`, branch `master`).
 
 ---
 
 ## 2. Última frente analisada
 
-TASK-02 + base da TASK-03 via Create Feature (modelagem em `docs/features/cli-parse-dispatch.md`):
-- `src/core/parse.js` — argv → `ParsedInvocation` (`util.parseArgs` em 2 passagens; comando-primeiro).
-- `src/core/dispatch.js` — registry de `CommandSpec` (fonte única p/ dispatch e help).
-- `src/core/help.js` — ajuda global e por-comando gerada do registry (CRIT-21).
-- `src/commands/{init,doctor,update}.js` — `CommandSpec` + `run` stub.
-- `src/util/errors.js` (`CortexError`+`ErrorCode`) e `src/util/output.js` (render acionável, REGRA-11).
-- `src/cli.js` religado ao pipeline; `bin/cli.js` propaga exit code.
+TASK-04 via Create Feature (clone temporário + cleanup garantido):
+- `src/util/fs.js` — `makeTempDir`/`removeDir` portáveis (REGRA-10), base do ciclo de vida do temp.
+- `src/util/git.js` — `assertGitAvailable` (→GIT_MISSING, E-01a) e `cloneShallow` (→SOURCE_UNREACHABLE, E-01b); git como subprocesso, sem shell.
+- `src/core/clone.js` — `withTempClone({from,ref}, run)`: assert→temp→clone→run, com remoção **garantida no `finally`** (CRIT-06).
+- `test/clone.test.js` — cleanup em sucesso/falha de clone/erro do callback + git ausente curto-circuita + erro real do git (offline).
+
+Building block anterior (TASK-02 + base TASK-03): modelagem em `docs/features/cli-parse-dispatch.md`; pipeline parse/dispatch/help/errors/output.
 
 ---
 
 ## 3. O que já está pronto
 
-- Base documental + `CLAUDE.md` materializado + `.gitignore` (P11.1). DEC-09 registrada.
+- Base documental + `CLAUDE.md` + `.gitignore` (P11.1). DEC-09 registrada. Commit inicial `9f16d52`.
 - TASK-01: bootstrap Node executável e testado.
-- TASK-02: parse + dispatch + `--help`/`--version` (CRIT-20, CRIT-21) — validado por testes e execução manual.
-- TASK-03 (base): `errors.js` + `output.js`. Restam `fs.js`/`git.js` (contratos modelados, impl. adiada).
-- `git init` feito (branch `master`); nenhum commit ainda.
+- TASK-02: parse + dispatch + `--help`/`--version` (CRIT-20, CRIT-21).
+- TASK-03 (base): `errors.js`, `output.js`, `fs.js` (temp), `git.js` (assert+clone).
+- TASK-04: `withTempClone` com cleanup garantido (CRIT-06, E-01a/b) — validado por testes e execução real.
 
 ---
 
 ## 4. O que ainda precisa acontecer
 
-- TASK-03 (restante): `util/fs.js`, `util/git.js` quando o `init` precisar (TASK-04+).
-- TASK-04..12 (`init` real) → TASK-13..16 (`doctor`/`update`).
+- TASK-05..12 (`init` real: cópia do núcleo → CLAUDE.md → estrutura → VERSION → escrita atômica → testes → publicação).
+- TASK-13..16 (`doctor`/`update`); `lsRemote` em `git.js` entra com o `doctor`.
 - CI multiplataforma (Linux + Windows nativo) — estabelecer cedo.
 
 ---
 
 ## 5. Próximos passos imediatos
 
-1. Acionar Create Feature → **TASK-04** consultando `.cortex/08-orquestracao/tipos-de-trabalho/create-feature.md`.
-2. Implementar `util/git.js` (contrato em `docs/features/cli-parse-dispatch.md` §7) + clone temporário shallow com cleanup garantido (CRIT-06, E-01b).
-3. Validar com `node --test` e execução manual.
+1. Acionar Create Feature → **TASK-05** consultando `.cortex/08-orquestracao/tipos-de-trabalho/create-feature.md`.
+2. Expandir `util/fs.js` com `copyTree(src, dst, filter)` (sem shell, EOL preservado) + criar módulo `SourceLayout` (REGRA-01); detectar `cortex/` vs. raiz legada (CRIT-12).
+3. Consumir `withTempClone` no `init` para copiar o núcleo do clone para `<destino>/.cortex/`.
+4. Validar com `node --test` e execução manual.
 
 ---
 
