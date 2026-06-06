@@ -43,6 +43,25 @@ export async function assertGitAvailable() {
 }
 
 /**
+ * Obtém o commit hash curto do HEAD em `cwd` (CRIT-04/05, REGRA-02).
+ * Usado para gravar o campo `commit` no `.cortex/VERSION` a partir do clone
+ * temporário.
+ * @param {string} cwd diretório do clone git
+ * @returns {Promise<string>} short commit hash
+ */
+export async function revParseHead(cwd) {
+  const { code, stdout, spawnError } = await runGit(['rev-parse', '--short', 'HEAD'], { cwd });
+  if (spawnError || code !== 0) {
+    throw new CortexError(
+      ErrorCode.GIT_MISSING,
+      'Não foi possível obter o commit do clone.',
+      'Verifique se o diretório é um repositório git válido.',
+    );
+  }
+  return stdout.trim();
+}
+
+/**
  * Clona a origem para `destDir` de forma rasa (`--depth 1`). Quando `ref` é
  * fornecida, fixa em tag/branch via `--branch`. Falha (URL inválida, sem rede,
  * ref inexistente) → {@link CortexError} `SOURCE_UNREACHABLE` (fluxo E-01b).
