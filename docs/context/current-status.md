@@ -6,14 +6,14 @@ Estado vivo do projeto: o que está pronto, em andamento, pendente e qual é o p
 - **Projeto:** innova-cortex-cli
 - **Documento:** current-status
 - **Estado:** em desenvolvimento
-- **Última atualização:** 2026-06-06
+- **Última atualização:** 2026-06-06 (TASK-11)
 - **Responsável:** Jonathan
 
 ---
 
 ## 1. Resumo do momento atual
 
-Init Project concluído; **TASK-01..07 entregues e validadas**. TASK-07: **estrutura mínima** — `createMinimalStructure(destDir)` em `src/core/project-structure.js` cria `docs/context/`, `docs/analysis/`, `memory/` via `mkdir({recursive:true})` (idempotente por design — não toca conteúdo preexistente — CRIT-03/11, REGRA-05/09). `node --test` verde (49/49). Próximo movimento: TASK-08 (geração do `.cortex/VERSION`).
+Init Project em andamento; **TASK-01..11 entregues e validadas**. TASK-11: **CI multiplataforma + smoke test e2e** — `.github/workflows/ci.yml` com matrix ubuntu-latest + windows-latest × Node 20/22; `test/e2e.test.js` com fixture git local (CRIT-01..12, sem rede). `node --test` verde (66/66). Próximo movimento: TASK-12 (documentação gerada + publicação v0.2.x no npm).
 
 ---
 
@@ -28,7 +28,7 @@ Init Project concluído; **TASK-01..07 entregues e validadas**. TASK-07: **estru
 
 ## 3. O que está em andamento
 
-- Nada em andamento — TASK-07 fechada. Aguardando início da TASK-08.
+- Nada em andamento — TASK-11 fechada. Aguardando início da TASK-12.
 
 ---
 
@@ -42,9 +42,8 @@ Init Project concluído; **TASK-01..07 entregues e validadas**. TASK-07: **estru
 
 ## 5. Prioridades do momento
 
-1. TASK-08: geração do `.cortex/VERSION` (YAML) com `source`/`ref`/`commit`/`installed_at`/`cli_version` (CRIT-04/05, REGRA-02).
-2. TASK-09: composição do `init` real (staging atômico + guardas REGRA-07/08) — primeiro ponto em que `init.js` deixa de ser stub.
-3. Estabelecer CI multiplataforma cedo (mitiga Lacuna 1).
+1. TASK-12: documentação gerada da lista-fonte + publicação v0.2.x no npm. CRIT-10 (Windows nativo) coberto pelo CI — gate satisfeito assim que o CI passar em `windows-latest`.
+2. TASK-13..16: `doctor`/`update` (fase posterior ao `init` validado em uso real).
 
 ---
 
@@ -66,7 +65,7 @@ Projeto solo, fonte única nesta máquina. **Decisão do autor:** versionar **tu
 
 ## 7. Próxima ação recomendada
 
-Acionar **Create Feature → TASK-08** (geração do `VERSION`). Building blocks prontos: `withTempClone`, `resolveGovernanceRoot`, `copyGovernanceCore`, `materializeClamdMd`, `createMinimalStructure`. Faltam o `VERSION` (TASK-08) e então **compor tudo no `init`** com staging atômico + guardas REGRA-07/08 (TASK-09) — só aí `init.js` deixa de ser stub.
+Acionar **Create Feature → TASK-12** (documentação gerada da lista-fonte + publicação v0.2.x). Antes de publicar: aguardar CI verde em `windows-latest` (CRIT-10 — gate de release). Se CI verde, avançar para `npm publish`.
 
 ---
 
