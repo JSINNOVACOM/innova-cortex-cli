@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { makeTempDir, removeDir } from '../src/util/fs.js';
 import { buildVersionRecord, formatVersionYaml, writeVersion } from '../src/core/version.js';
 import { revParseHead } from '../src/util/git.js';
@@ -67,7 +68,7 @@ test('revParseHead em diretório não-git lança CortexError GIT_MISSING', async
 });
 
 test('revParseHead no repo do CLI retorna string não-vazia (integração, sem rede)', async () => {
-  const projectRoot = new URL('..', import.meta.url).pathname;
+  const projectRoot = fileURLToPath(new URL('..', import.meta.url));
   const commit = await revParseHead(projectRoot);
   assert.ok(typeof commit === 'string' && commit.length > 0, `commit inválido: "${commit}"`);
 });
