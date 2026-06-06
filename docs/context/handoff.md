@@ -1,5 +1,7 @@
 # Handoff — innova-cortex-cli
 
+Passagem de contexto para retomada da sessão: onde parou, o que está pronto e próximos passos imediatos.
+
 ## Metadados
 - **Projeto:** innova-cortex-cli
 - **Documento:** handoff
@@ -11,20 +13,20 @@
 
 ## 1. Onde o trabalho parou
 
-Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04 e TASK-05 entregues e validadas**. CLI roda o pipeline de parse/dispatch/saída + clone temporário com cleanup garantido + detecção de layout e cópia do núcleo; `node --test` verde (38/38). Pronto para a TASK-06 (materialização do `CLAUDE.md`). Primeiro commit feito (`9f16d52`, branch `master`); TASK-04 em `70b6d46`.
+Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04, TASK-05 e TASK-06 entregues e validadas**. CLI roda o pipeline de parse/dispatch/saída + clone temporário + detecção de layout + cópia do núcleo + materialização do `CLAUDE.md`; `node --test` verde (44/44). Pronto para a TASK-07 (estrutura mínima). Commits: `9f16d52` (init), `70b6d46` (TASK-04), `612ff79` (TASK-05).
 
 ---
 
 ## 2. Última frente analisada
 
-TASK-05 via Create Feature (detecção de layout + cópia do núcleo):
-- `src/util/fs.js` — `copyTree(srcDir, destDir, keep)`: cópia recursiva portável (REGRA-10) via `copyFile` byte-a-byte (EOL preservado), sem shell; predicado `keep(name,isDir)` por entrada.
-- `src/core/source-layout.js` — `INCLUDE_DIRS`/`INCLUDE_FILES_AT_ROOT`/`EXCLUDE_PATTERNS` (fonte da verdade — REGRA-01); `resolveGovernanceRoot` (CRIT-12: `cortex/` se `cortex/Claude.md` existe, senão raiz legada); `copyGovernanceCore` (allowlist no topo + EXCLUDE defensivo aninhado → CRIT-01).
-- `test/source-layout.test.js` — copyTree (keep + EOL), detecção dos 2 layouts, cópia só do núcleo, filtro de institucional aninhado, origem incompleta sem erro.
+TASK-06 via Create Feature (materialização do `CLAUDE.md`):
+- `src/core/claude-md.js` — `materializeClamdMd(governanceRoot, destDir, {name, objective})`: lê `04-templates/template-claude-md-local.md`; substitui `{{PROJECT_NAME}}`/`{{PROJECT_OBJECTIVE}}` + remove `<!-- TODO: ... -->` adjacente quando a flag é fornecida; sem flags, mantém placeholder + TODO visível (CRIT-02, REGRA-04); preserva `CLAUDE.md` existente retornando `{skipped:true}` (CRIT-11, REGRA-09).
+- `test/claude-md.test.js` — ambos substituídos, só um substituído, ambos visíveis sem flags, preservação de existente, newline final.
 
-Decisão de escopo: `init.js` **permanece stub** — a composição (clone→detect→copy→staging→destino) com guardas REGRA-07/08 é da TASK-09. TASK-05 entrega só os building blocks.
+Decisão de escopo: `init.js` **permanece stub** — composição com staging atômico + guardas é TASK-09.
 
-Building block anterior (TASK-04): `withTempClone` com cleanup garantido (`src/core/clone.js`); `assertGitAvailable`/`cloneShallow` em `src/util/git.js` (E-01a/b).
+TASK-05: `copyTree` portável em `util/fs.js` + `source-layout.js` (detecção CRIT-12 + cópia núcleo CRIT-01/REGRA-01).
+TASK-04: `withTempClone` com cleanup garantido (`src/core/clone.js`); `assertGitAvailable`/`cloneShallow` em `util/git.js` (E-01a/b).
 
 ---
 
@@ -35,7 +37,8 @@ Building block anterior (TASK-04): `withTempClone` com cleanup garantido (`src/c
 - TASK-02: parse + dispatch + `--help`/`--version` (CRIT-20, CRIT-21).
 - TASK-03 (base): `errors.js`, `output.js`, `fs.js` (temp+copyTree), `git.js` (assert+clone).
 - TASK-04: `withTempClone` com cleanup garantido (CRIT-06, E-01a/b) — validado por testes e execução real.
-- TASK-05: `copyTree` + `source-layout.js` (detecção CRIT-12 + cópia do núcleo CRIT-01/REGRA-01) — validado por testes (38/38).
+- TASK-05: `copyTree` + `source-layout.js` (detecção CRIT-12 + cópia do núcleo CRIT-01/REGRA-01) — validado (38/38).
+- TASK-06: `claude-md.js` materialização do `CLAUDE.md` com substituição de placeholders (CRIT-02/REGRA-04) + preservação de existente (CRIT-11/REGRA-09) — validado (44/44).
 
 ---
 
@@ -49,9 +52,9 @@ Building block anterior (TASK-04): `withTempClone` com cleanup garantido (`src/c
 
 ## 5. Próximos passos imediatos
 
-1. Acionar Create Feature → **TASK-06** consultando `.cortex/08-orquestracao/tipos-de-trabalho/create-feature.md`.
-2. Materializar o `CLAUDE.md` da raiz a partir de `04-templates/template-claude-md-local.md`, substituindo `{{PROJECT_NAME}}`/`{{PROJECT_OBJECTIVE}}` quando `--name`/`--objective`; sem flags, manter placeholder visível com `<!-- TODO -->` (CRIT-02, REGRA-04). Provável módulo `src/core/claude-md.js` + `readFile`/`writeFile` em `util/fs.js`.
-3. Seguir para TASK-07 (estrutura mínima) e TASK-08 (VERSION); a composição final no `init.js` (staging atômico + guardas) é a TASK-09.
+1. Acionar Create Feature → **TASK-07** consultando `.cortex/08-orquestracao/tipos-de-trabalho/create-feature.md`.
+2. Criar `src/core/project-structure.js` (ou similar): `createMinimalStructure(destDir)` — cria `docs/context/`, `docs/analysis/`, `memory/` via `mkdir({recursive:true})` sem tocar diretórios já existentes (CRIT-03/11, REGRA-05/09).
+3. Seguir para TASK-08 (VERSION) e TASK-09 (composição do `init.js` com staging atômico + guardas REGRA-07/08).
 4. Validar com `node --test` e execução manual.
 
 ---

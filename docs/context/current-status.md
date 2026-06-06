@@ -1,5 +1,7 @@
 # Current Status — innova-cortex-cli
 
+Estado vivo do projeto: o que está pronto, em andamento, pendente e qual é o próximo passo.
+
 ## Metadados
 - **Projeto:** innova-cortex-cli
 - **Documento:** current-status
@@ -11,7 +13,7 @@
 
 ## 1. Resumo do momento atual
 
-Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04 e TASK-05 entregues e validadas**. CLI executa o pipeline `parse → (help/version) → dispatch → render` (CRIT-20/21, REGRA-11). TASK-04: clone temporário shallow com **cleanup garantido inclusive em falha** (`withTempClone` em `src/core/clone.js`). TASK-05: **detecção de layout + cópia do núcleo** — `resolveGovernanceRoot` (CRIT-12: `cortex/` pós-v0.2.2 vs. raiz legada) e `copyGovernanceCore` (CRIT-01/REGRA-01: allowlist INCLUDE + EXCLUDE defensivo aninhado) em `src/core/source-layout.js`, sobre `copyTree` portável em `util/fs.js` (EOL preservado, sem shell — REGRA-10). `node --test` verde (38/38). Próximo movimento: TASK-06 (materialização do `CLAUDE.md`).
+Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04, TASK-05 e TASK-06 entregues e validadas**. TASK-06: **materialização do `CLAUDE.md`** — `materializeClamdMd(governanceRoot, destDir, {name, objective})` em `src/core/claude-md.js`: lê o template de `04-templates/`, substitui `{{PROJECT_NAME}}`/`{{PROJECT_OBJECTIVE}}` + remove `<!-- TODO: ... -->` adjacente quando a flag é fornecida; sem flags, mantém placeholder + TODO visível (CRIT-02, REGRA-04); preserva `CLAUDE.md` existente retornando `{skipped:true}` (CRIT-11, REGRA-09). `node --test` verde (44/44). Próximo movimento: TASK-07 (estrutura mínima) ou TASK-08 (VERSION).
 
 ---
 
@@ -26,22 +28,22 @@ Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04 e TASK-05 
 
 ## 3. O que está em andamento
 
-- Nada em andamento — TASK-05 fechada. Aguardando início da TASK-06.
+- Nada em andamento — TASK-06 fechada. Aguardando início da TASK-07.
 
 ---
 
 ## 4. O que ainda falta
 
-- TASK-03 (restante): `util/git.js` ganha `lsRemote` quando o `doctor` precisar (TASK-13); `util/fs.js` ganha leitura/escrita atômica na TASK-08/09.
-- TASK-06..12: CLAUDE.md → estrutura mínima → VERSION → escrita atômica → testes multiplataforma → publicação.
+- TASK-03 (restante): `util/git.js` ganha `lsRemote` quando o `doctor` precisar (TASK-13); `util/fs.js` ganha escrita atômica na TASK-09.
+- TASK-07..12: estrutura mínima → VERSION → escrita atômica → testes multiplataforma → publicação.
 - TASK-13..16: `doctor`/`update` + publicação.
 
 ---
 
 ## 5. Prioridades do momento
 
-1. TASK-06: materialização do `CLAUDE.md` a partir do template (`04-templates/template-claude-md-local.md`) + substituição de placeholders `--name`/`--objective`; placeholder visível com `<!-- TODO -->` quando ausente (CRIT-02, REGRA-04).
-2. TASK-07: estrutura mínima (`docs/context/`, `docs/analysis/`, `memory/`) sem destruir preexistente (CRIT-03/11, REGRA-05/09).
+1. TASK-07: estrutura mínima (`docs/context/`, `docs/analysis/`, `memory/`) sem destruir preexistente (CRIT-03/11, REGRA-05/09).
+2. TASK-08: geração do `.cortex/VERSION` (YAML) com `source`/`ref`/`commit`/`installed_at`/`cli_version` (CRIT-04/05, REGRA-02).
 3. Estabelecer CI multiplataforma cedo (mitiga Lacuna 1).
 
 ---
@@ -64,7 +66,7 @@ Projeto solo, fonte única nesta máquina. **Decisão do autor:** versionar **tu
 
 ## 7. Próxima ação recomendada
 
-Acionar **Create Feature → TASK-06** (materialização do `CLAUDE.md`). Building blocks prontos para a composição do `init`: `withTempClone` (clone+cleanup), `resolveGovernanceRoot` (raiz da governança) e `copyGovernanceCore` (núcleo → staging). Falta materializar o `CLAUDE.md` do template (TASK-06), a estrutura mínima (TASK-07), o `VERSION` (TASK-08) e então **compor tudo no `init`** com staging atômico + guardas REGRA-07/08 (TASK-09) — só aí `init.js` deixa de ser stub.
+Acionar **Create Feature → TASK-07** (estrutura mínima). Building blocks prontos para a composição do `init`: `withTempClone`, `resolveGovernanceRoot`, `copyGovernanceCore`, `materializeClamdMd`. Faltam a estrutura mínima (TASK-07), o `VERSION` (TASK-08) e então **compor tudo no `init`** com staging atômico + guardas REGRA-07/08 (TASK-09) — só aí `init.js` deixa de ser stub.
 
 ---
 
