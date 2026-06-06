@@ -13,7 +13,7 @@ Estado vivo do projeto: o que está pronto, em andamento, pendente e qual é o p
 
 ## 1. Resumo do momento atual
 
-Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04, TASK-05 e TASK-06 entregues e validadas**. TASK-06: **materialização do `CLAUDE.md`** — `materializeClamdMd(governanceRoot, destDir, {name, objective})` em `src/core/claude-md.js`: lê o template de `04-templates/`, substitui `{{PROJECT_NAME}}`/`{{PROJECT_OBJECTIVE}}` + remove `<!-- TODO: ... -->` adjacente quando a flag é fornecida; sem flags, mantém placeholder + TODO visível (CRIT-02, REGRA-04); preserva `CLAUDE.md` existente retornando `{skipped:true}` (CRIT-11, REGRA-09). `node --test` verde (44/44). Próximo movimento: TASK-07 (estrutura mínima) ou TASK-08 (VERSION).
+Init Project concluído; **TASK-01..07 entregues e validadas**. TASK-07: **estrutura mínima** — `createMinimalStructure(destDir)` em `src/core/project-structure.js` cria `docs/context/`, `docs/analysis/`, `memory/` via `mkdir({recursive:true})` (idempotente por design — não toca conteúdo preexistente — CRIT-03/11, REGRA-05/09). `node --test` verde (49/49). Próximo movimento: TASK-08 (geração do `.cortex/VERSION`).
 
 ---
 
@@ -28,22 +28,22 @@ Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04, TASK-05 e
 
 ## 3. O que está em andamento
 
-- Nada em andamento — TASK-06 fechada. Aguardando início da TASK-07.
+- Nada em andamento — TASK-07 fechada. Aguardando início da TASK-08.
 
 ---
 
 ## 4. O que ainda falta
 
 - TASK-03 (restante): `util/git.js` ganha `lsRemote` quando o `doctor` precisar (TASK-13); `util/fs.js` ganha escrita atômica na TASK-09.
-- TASK-07..12: estrutura mínima → VERSION → escrita atômica → testes multiplataforma → publicação.
+- TASK-08..12: VERSION → escrita atômica → testes multiplataforma → publicação.
 - TASK-13..16: `doctor`/`update` + publicação.
 
 ---
 
 ## 5. Prioridades do momento
 
-1. TASK-07: estrutura mínima (`docs/context/`, `docs/analysis/`, `memory/`) sem destruir preexistente (CRIT-03/11, REGRA-05/09).
-2. TASK-08: geração do `.cortex/VERSION` (YAML) com `source`/`ref`/`commit`/`installed_at`/`cli_version` (CRIT-04/05, REGRA-02).
+1. TASK-08: geração do `.cortex/VERSION` (YAML) com `source`/`ref`/`commit`/`installed_at`/`cli_version` (CRIT-04/05, REGRA-02).
+2. TASK-09: composição do `init` real (staging atômico + guardas REGRA-07/08) — primeiro ponto em que `init.js` deixa de ser stub.
 3. Estabelecer CI multiplataforma cedo (mitiga Lacuna 1).
 
 ---
@@ -66,7 +66,7 @@ Projeto solo, fonte única nesta máquina. **Decisão do autor:** versionar **tu
 
 ## 7. Próxima ação recomendada
 
-Acionar **Create Feature → TASK-07** (estrutura mínima). Building blocks prontos para a composição do `init`: `withTempClone`, `resolveGovernanceRoot`, `copyGovernanceCore`, `materializeClamdMd`. Faltam a estrutura mínima (TASK-07), o `VERSION` (TASK-08) e então **compor tudo no `init`** com staging atômico + guardas REGRA-07/08 (TASK-09) — só aí `init.js` deixa de ser stub.
+Acionar **Create Feature → TASK-08** (geração do `VERSION`). Building blocks prontos: `withTempClone`, `resolveGovernanceRoot`, `copyGovernanceCore`, `materializeClamdMd`, `createMinimalStructure`. Faltam o `VERSION` (TASK-08) e então **compor tudo no `init`** com staging atômico + guardas REGRA-07/08 (TASK-09) — só aí `init.js` deixa de ser stub.
 
 ---
 

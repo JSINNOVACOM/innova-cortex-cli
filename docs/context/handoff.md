@@ -13,20 +13,21 @@ Passagem de contexto para retomada da sessão: onde parou, o que está pronto e 
 
 ## 1. Onde o trabalho parou
 
-Init Project concluído; **TASK-01, TASK-02, base da TASK-03, TASK-04, TASK-05 e TASK-06 entregues e validadas**. CLI roda o pipeline de parse/dispatch/saída + clone temporário + detecção de layout + cópia do núcleo + materialização do `CLAUDE.md`; `node --test` verde (44/44). Pronto para a TASK-07 (estrutura mínima). Commits: `9f16d52` (init), `70b6d46` (TASK-04), `612ff79` (TASK-05).
+Init Project concluído; **TASK-01..07 entregues e validadas**. CLI roda o pipeline parse/dispatch/saída + clone + layout + cópia do núcleo + `CLAUDE.md` + estrutura mínima; `node --test` verde (49/49). Pronto para a TASK-08 (VERSION). Commits: `9f16d52` (init), `70b6d46` (TASK-04), `612ff79` (TASK-05), `d1b0c0d` (TASK-06).
 
 ---
 
 ## 2. Última frente analisada
 
-TASK-06 via Create Feature (materialização do `CLAUDE.md`):
-- `src/core/claude-md.js` — `materializeClamdMd(governanceRoot, destDir, {name, objective})`: lê `04-templates/template-claude-md-local.md`; substitui `{{PROJECT_NAME}}`/`{{PROJECT_OBJECTIVE}}` + remove `<!-- TODO: ... -->` adjacente quando a flag é fornecida; sem flags, mantém placeholder + TODO visível (CRIT-02, REGRA-04); preserva `CLAUDE.md` existente retornando `{skipped:true}` (CRIT-11, REGRA-09).
-- `test/claude-md.test.js` — ambos substituídos, só um substituído, ambos visíveis sem flags, preservação de existente, newline final.
+TASK-07 via Create Feature (estrutura mínima do projeto):
+- `src/core/project-structure.js` — `MINIMAL_DIRS` + `createMinimalStructure(destDir)`: cria `docs/context/`, `docs/analysis/`, `memory/` via `mkdir({recursive:true})` — idempotente, não toca conteúdo preexistente (CRIT-03/11, REGRA-05/09). Retorna `{created, existing}` para o `init` reportar.
+- `test/project-structure.test.js` — cria os 3 dirs, idempotência, preserva conteúdo, subpastas aninhadas, MINIMAL_DIRS conteúdo.
 
 Decisão de escopo: `init.js` **permanece stub** — composição com staging atômico + guardas é TASK-09.
 
-TASK-05: `copyTree` portável em `util/fs.js` + `source-layout.js` (detecção CRIT-12 + cópia núcleo CRIT-01/REGRA-01).
-TASK-04: `withTempClone` com cleanup garantido (`src/core/clone.js`); `assertGitAvailable`/`cloneShallow` em `util/git.js` (E-01a/b).
+TASK-06: `claude-md.js` materialização do `CLAUDE.md` (CRIT-02/REGRA-04 + CRIT-11/REGRA-09).
+TASK-05: `copyTree` + `source-layout.js` (CRIT-12 + CRIT-01/REGRA-01).
+TASK-04: `withTempClone` com cleanup garantido (`clone.js`); `assertGitAvailable`/`cloneShallow` (`git.js`, E-01a/b).
 
 ---
 
@@ -38,7 +39,8 @@ TASK-04: `withTempClone` com cleanup garantido (`src/core/clone.js`); `assertGit
 - TASK-03 (base): `errors.js`, `output.js`, `fs.js` (temp+copyTree), `git.js` (assert+clone).
 - TASK-04: `withTempClone` com cleanup garantido (CRIT-06, E-01a/b) — validado por testes e execução real.
 - TASK-05: `copyTree` + `source-layout.js` (detecção CRIT-12 + cópia do núcleo CRIT-01/REGRA-01) — validado (38/38).
-- TASK-06: `claude-md.js` materialização do `CLAUDE.md` com substituição de placeholders (CRIT-02/REGRA-04) + preservação de existente (CRIT-11/REGRA-09) — validado (44/44).
+- TASK-06: `claude-md.js` materialização do `CLAUDE.md` (CRIT-02/REGRA-04 + CRIT-11/REGRA-09) — validado (44/44).
+- TASK-07: `project-structure.js` estrutura mínima `docs/context/`, `docs/analysis/`, `memory/` (CRIT-03/11, REGRA-05/09) — validado (49/49).
 
 ---
 
@@ -52,9 +54,9 @@ TASK-04: `withTempClone` com cleanup garantido (`src/core/clone.js`); `assertGit
 
 ## 5. Próximos passos imediatos
 
-1. Acionar Create Feature → **TASK-07** consultando `.cortex/08-orquestracao/tipos-de-trabalho/create-feature.md`.
-2. Criar `src/core/project-structure.js` (ou similar): `createMinimalStructure(destDir)` — cria `docs/context/`, `docs/analysis/`, `memory/` via `mkdir({recursive:true})` sem tocar diretórios já existentes (CRIT-03/11, REGRA-05/09).
-3. Seguir para TASK-08 (VERSION) e TASK-09 (composição do `init.js` com staging atômico + guardas REGRA-07/08).
+1. Acionar Create Feature → **TASK-08** consultando `.cortex/08-orquestracao/tipos-de-trabalho/create-feature.md`.
+2. Criar `src/core/version.js`: `buildVersionRecord({source, ref, commit, installedAt, cliVersion})` produz o YAML flat do `.cortex/VERSION` (CRIT-04/05, REGRA-02); `writeVersion(stagingCortexDir, record)` grava o arquivo. Ler `source` do `git.js` (`revParseHead` para o `commit`).
+3. Seguir para TASK-09 (composição do `init.js` com staging atômico + guardas REGRA-07/08) — ponto em que `init.js` deixa de ser stub.
 4. Validar com `node --test` e execução manual.
 
 ---
