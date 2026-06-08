@@ -12,6 +12,8 @@
 npx innova-cortex init
 ```
 
+> ⚠️ **Não rode `npm install innova-cortex`.** Isto é uma CLI de scaffolding, não uma dependência — `npm install` só baixa o pacote para `node_modules/` e **não cria** o `.cortex/`. Use sempre **`npx innova-cortex init`** dentro do seu projeto.
+
 ---
 
 ## O que é o Innova Cortex
