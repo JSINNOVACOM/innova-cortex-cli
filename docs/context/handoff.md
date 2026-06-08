@@ -6,14 +6,14 @@ Passagem de contexto para retomada da sessão: onde parou, o que está pronto e 
 - **Projeto:** innova-cortex-cli
 - **Documento:** handoff
 - **Estado:** em desenvolvimento
-- **Última atualização:** 2026-06-06 (TASK-12)
+- **Última atualização:** 2026-06-08 (publicação npm 0.2.1)
 - **Responsável:** Jonathan
 
 ---
 
 ## 1. Onde o trabalho parou
 
-Init Project em andamento; **TASK-01..12 entregues e validadas**. TASK-12 entregou `README.md` (install-manifest gerado de `source-layout.js`), `scripts/generate-docs.js` e bump para `0.2.0`. `node --test` verde (66/66). **Publicação pendente:** aguardando CI Windows verde → `npm publish --access public`. Próximo: TASK-13 (`doctor`). Último commit: TASK-12.
+Entrega `init` **concluída e PUBLICADA**: `innova-cortex@0.2.1` no npm (2026-06-08), `npx innova-cortex` operacional para adopters. Adicionados `LICENSE` MIT (Copyright JSINNOVACOM) + metadados npm. CI multiplataforma verde; publish via Automation Token (conta `jsinnovacortex` sem 2FA — token "bypass 2FA"). `node --test` verde (66/66). Próximo: **TASK-13 (`doctor`)**. Último commit: `e1e19ce` (bump 0.2.1).
 
 ---
 
@@ -75,9 +75,10 @@ TASK-04: `withTempClone` com cleanup garantido (`clone.js`); `assertGitAvailable
 
 ## 5. Próximos passos imediatos
 
-1. Push → aguardar CI verde em `windows-latest` (CRIT-10 — gate de release).
-2. CI verde → `npm publish --access public` (requer `npm login` com conta autorizada).
-3. Após publicação: acionar Create Feature → **TASK-13** (`doctor`).
+1. Acionar Create Feature → **TASK-13** (`doctor`): `lsRemote` em `util/git.js` + leitura do `VERSION` instalado + diff dos arquivos modificados localmente.
+2. (Opcional) Automatizar `npm publish` no CI usando o Automation Token já criado (guardar como secret do GitHub Actions).
+
+**Publicação (referência):** `innova-cortex@0.2.1` publicado em 2026-06-08 via `npm publish --access public`. Conta `jsinnovacortex` **não tem 2FA** → usar **Automation Token** (npm exige 2FA ou token "bypass 2FA" para publicar). Versões despublicadas NÃO podem ser republicadas (por isso 0.2.0 → 0.2.1).
 
 ---
 

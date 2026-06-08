@@ -6,14 +6,14 @@ Estado vivo do projeto: o que está pronto, em andamento, pendente e qual é o p
 - **Projeto:** innova-cortex-cli
 - **Documento:** current-status
 - **Estado:** em desenvolvimento
-- **Última atualização:** 2026-06-06 (TASK-12)
+- **Última atualização:** 2026-06-08 (publicação npm 0.2.1)
 - **Responsável:** Jonathan
 
 ---
 
 ## 1. Resumo do momento atual
 
-Init Project em andamento; **TASK-01..12 entregues e validadas**. TASK-12: **documentação gerada + v0.2.0** — `README.md` com install-manifest gerado de `source-layout.js` (CRIT-21, REGRA-01), `scripts/generate-docs.js`, `package.json` bumped para `0.2.0`. `node --test` verde (66/66). **Aguardando CI Windows verde para `npm publish`.** Próximo movimento: TASK-13 (`doctor`).
+Init Project (entrega `init`) **concluído e PUBLICADO**: `innova-cortex@0.2.1` está no npm (CI Windows verde, `npm publish --access public` OK em 2026-06-08). `npx innova-cortex` funciona para adopters. Inclui `LICENSE` MIT (Copyright JSINNOVACOM) + metadados npm (`author`/`repository`/`bugs`/`homepage`). `node --test` verde (66/66). Próximo movimento: **TASK-13 (`doctor`)**.
 
 ---
 
@@ -28,7 +28,7 @@ Init Project em andamento; **TASK-01..12 entregues e validadas**. TASK-12: **doc
 
 ## 3. O que está em andamento
 
-- Nada em andamento — TASK-12 fechada. Aguardando CI Windows verde para `npm publish`.
+- Nada em andamento — `init` publicado (`innova-cortex@0.2.1`). Pronto para iniciar TASK-13 (`doctor`).
 
 ---
 
@@ -42,8 +42,8 @@ Init Project em andamento; **TASK-01..12 entregues e validadas**. TASK-12: **doc
 
 ## 5. Prioridades do momento
 
-1. `npm publish` (manual) — assim que CI Windows verde confirmar CRIT-10. Comando: `npm publish --access public`.
-2. TASK-13: `doctor` — leitura do `VERSION` + `ls-remote` + diff de arquivos modificados localmente.
+1. TASK-13: `doctor` — leitura do `VERSION` + `ls-remote` + diff de arquivos modificados localmente.
+2. (Opcional) automatizar `npm publish` no CI usando o Automation Token já criado.
 
 ---
 
@@ -65,7 +65,7 @@ Projeto solo, fonte única nesta máquina. **Decisão do autor:** versionar **tu
 
 ## 7. Próxima ação recomendada
 
-Fazer push → aguardar CI verde em `windows-latest` (CRIT-10) → rodar `npm publish --access public`. Após publicação confirmada, acionar **Create Feature → TASK-13** (`doctor`).
+`init` publicado (`innova-cortex@0.2.1`). Acionar **Create Feature → TASK-13** (`doctor`): leitura do `VERSION` instalado + `ls-remote` na origem + diff dos arquivos modificados localmente.
 
 ---
 
