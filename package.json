@@ -25,5 +25,14 @@
     "cli",
     "scaffolding"
   ],
+  "author": "JSINNOVACOM",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JSINNOVACOM/innova-cortex-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JSINNOVACOM/innova-cortex-cli/issues"
+  },
+  "homepage": "https://github.com/JSINNOVACOM/innova-cortex-cli#readme",
   "license": "MIT"
 }
