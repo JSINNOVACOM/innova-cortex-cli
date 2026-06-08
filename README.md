@@ -109,7 +109,7 @@ source: <origem>
 ref: v0.3.0
 commit: b9bdd90
 installed_at: 2026-06-06T10:23:00Z
-cli_version: 0.2.0
+cli_version: 0.2.1
 ```
 
 É o que permite saber — e auditar — qual versão da governança está ativa em cada projeto.
