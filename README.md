@@ -129,9 +129,15 @@ cli_version: 0.2.1
 
 ## Requisitos
 
+Para **instalar** (rodar o `init`):
+
 - **Node** `>= 20`
 - **git** no `PATH` (o `init` clona a origem)
 - Roda em **Windows, macOS e Linux**.
+
+Para **usar** a governança depois de instalada:
+
+- Um **assistente de código que leia `CLAUDE.md`** (ex.: Claude Code, Cursor) — é nele que os fluxos do Cortex são acionados.
 
 ---
 
