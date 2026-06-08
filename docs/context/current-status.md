@@ -49,7 +49,8 @@ Init Project (entrega `init`) **concluído e PUBLICADO**: `innova-cortex@0.2.1` 
 
 ## 6. Bloqueios atuais
 
-- Nenhum bloqueio para iniciar a TASK-01.
+- Nenhum bloqueio para iniciar a TASK-13.
+- **Pendência de republicação:** aviso "não use `npm install`" foi adicionado ao README (commit `12e7fdc`) mas a página do npm só atualiza com novo publish. Embarcar na próxima versão (`0.2.2`+) junto com TASK-13.
 - **Pendência aceita:** spec ainda usa rótulos internos "v0.2/v0.3"; DEC-08 aposentou esses rótulos públicos ("CLI — `init`" / "CLI — `doctor`/`update`"). Não corrigir a spec aqui (canônica no vault — DEC-10); apenas usar a nomenclatura nova no projeto.
 - **Resolvida (2026-06-05):** a referência forward a `bin/cli.js` foi criada pela TASK-01 — não há mais pendência de Check 2.
 
