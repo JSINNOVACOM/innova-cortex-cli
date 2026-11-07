@@ -1,6 +1,6 @@
 {
   "name": "innova-cortex",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "CLI que instala e versiona o .cortex/ (governança Innova Cortex) em projetos adopters.",
   "type": "module",
   "bin": {
