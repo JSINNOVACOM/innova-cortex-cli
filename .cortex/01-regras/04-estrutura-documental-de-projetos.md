@@ -20,6 +20,8 @@ Relacionado a:
 - [skill-iniciar-projeto](../03-skills/skill-iniciar-projeto.md)
 - [skill-mapear-contexto](../03-skills/skill-mapear-contexto.md)
 - [skill-revisar-documento](../03-skills/skill-revisar-documento.md)
+- [skill-trilho-de-interface](../03-skills/skill-trilho-de-interface.md)
+- [template-fundacao-visual](../04-templates/template-fundacao-visual.md)
 
 ---
 
@@ -289,7 +291,23 @@ A pasta `docs/` fica fora do Git por padrão **porque pode conter regras de neg�
 
 A pasta `memory/` fica fora do Git por padrão **porque registra estado vivo de sessões e pode conter contexto pessoal/operacional**.
 
-Se algum documento específico precisar ser versionado, isso deve ser decisão explícita do projeto — adicionar regra negativa no `.gitignore` (ex.: `!docs/business/domain-overview.md`) ou mover o arquivo para fora dessas pastas.
+Se algum documento específico precisar ser versionado, isso deve ser decisão explícita do projeto — adicionar regra negativa no `.gitignore` ou mover o arquivo para fora dessas pastas.
+
+Com a entrada `docs/`, o Git ignora a pasta inteira e não aplica regras negativas dentro dela. Para versionar parte da pasta, trocar `docs/` por `docs/*` (vale o mesmo para `memory/`):
+
+```text
+# uma subpasta inteira
+docs/*
+!docs/design/
+
+# um arquivo dentro de subpasta: reabrir a subpasta e ignorar o resto dela
+docs/*
+!docs/business/
+docs/business/*
+!docs/business/domain-overview.md
+```
+
+A skill de encerramento aceita `docs/` ou `docs/*` como entrada presente.
 
 Outros itens devem ser adicionados conforme stack, build, cache, ambiente local e dependências.
 
@@ -329,7 +347,33 @@ docs/
   specs/
   decisions/
   integrations/
+  design/
 ```
+
+### Fundação visual (`docs/design/`)
+
+Projetos com interface mantêm a fundação visual em `docs/design/`. Projetos sem interface não criam esta pasta.
+
+```text
+docs/
+  design/
+    design-system.md        ← direção aprovada, sistema, padrões de layout, critérios de medida
+    plano-de-interface.md   ← só quando há modernização de telas existentes
+    direcao/                ← maquete da direção aprovada pelo dono
+    telas/                  ← maquetes de tela aprovadas
+    referencia/             ← capturas de referência para medida
+```
+
+- `design-system.md` nasce do [template-fundacao-visual](../04-templates/template-fundacao-visual.md).
+- `plano-de-interface.md` nasce do [template-plano-de-interface](../04-templates/template-plano-de-interface.md).
+- Tokens e componentes vivem no código do projeto; `docs/design/` registra decisões e referências.
+- O `PRODUCT.md` gerado pelo Impeccable é derivado de `docs/business/domain-overview.md`; em conflito sobre domínio, vale o `domain-overview.md`.
+
+A pasta é criada no momento A da [skill-trilho-de-interface](../03-skills/skill-trilho-de-interface.md), antes da primeira tela.
+
+Como `docs/` fica fora do Git por padrão (ver "Proteção mínima com `.gitignore`"), recomenda-se versionar `docs/design/`: a direção aprovada e as maquetes são contrato para todos que criam telas no projeto. A decisão continua sendo do projeto.
+
+Para versionar `docs/design/`, trocar `docs/` por `docs/*` e acrescentar `!docs/design/` (ver "Proteção mínima com `.gitignore`").
 
 ### Regra de crescimento
 

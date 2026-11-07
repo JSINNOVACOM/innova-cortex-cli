@@ -16,6 +16,8 @@ Relacionado a:
 - [agente-planejador](../../02-agentes/agente-planejador.md)
 - [skill-revisar-documento](../../03-skills/skill-revisar-documento.md)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md)
+- [quality-gate-interface](../../10-padroes-tecnicos/quality-gates/quality-gate-interface.md)
 - [criterios-base](../criterios-de-entrada-e-saida/criterios-base.md)
 - [handoff-entre-agentes](../handoffs/handoff-entre-agentes.md)
 - memoria-operacional (registro interno, não publicado no OSS)
@@ -135,6 +137,8 @@ Deve produzir:
 
 Se o objeto não estiver claro ou o critério não existir, solicitar clarificação antes de avançar.
 
+Quando o objeto inclui telas, o critério inclui o [quality-gate-interface](../../10-padroes-tecnicos/quality-gates/quality-gate-interface.md) e a fundação visual do projeto em `docs/design/`.
+
 ---
 
 ### Etapa 2: leitura crítica
@@ -147,6 +151,15 @@ Deve produzir:
 - lista do que está correto e aderente
 - lista do que está inadequado, com descrição objetiva de cada item
 - separação clara entre fato observado e interpretação
+
+Quando o objeto inclui telas, a leitura crítica aplica o checklist de interface:
+
+- código revisado contra as regras de interface (Vercel `web-design-guidelines`)
+- telas auditadas com o Impeccable (`audit`) contra o `PRODUCT.md`
+- coerência com a fundação: tokens, componentes e padrões de layout do `docs/design/design-system.md`
+- medidas do Playwright: contraste AA, alvos de 44 px, rolagem lateral nas larguras de referência, claro e escuro
+
+Achado que mudaria a direção visual aprovada é registrado como proposta ao dono, não como correção.
 
 ---
 

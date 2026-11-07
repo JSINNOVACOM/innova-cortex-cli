@@ -10,6 +10,7 @@ Relacionado a:
 - [03-checklist-de-qualidade](../01-regras/03-checklist-de-qualidade.md)
 - [skill-mapear-contexto](../03-skills/skill-mapear-contexto.md)
 - [skill-validar-encerramento](../03-skills/skill-validar-encerramento.md)
+- [skill-trilho-de-interface](../03-skills/skill-trilho-de-interface.md)
 
 ---
 
@@ -75,6 +76,7 @@ Usar este agente quando a tarefa exigir:
 
 ## Pode consultar também
 - [skill-revisar-documento](../03-skills/skill-revisar-documento.md)
+- [skill-trilho-de-interface](../03-skills/skill-trilho-de-interface.md) (quando a fatia cria ou muda uma tela)
 
 ---
 

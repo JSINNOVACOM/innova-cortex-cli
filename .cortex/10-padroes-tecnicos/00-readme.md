@@ -155,6 +155,11 @@ Exemplos:
 - rollback conhecido
 - impacto compreendido
 
+Gates existentes:
+
+- [quality-gate-base](quality-gates/quality-gate-base.md): mínimo técnico transversal
+- [quality-gate-interface](quality-gates/quality-gate-interface.md): complemento para fatias que criam ou mudam telas
+
 Regra importante:  
 quality gate deve ajudar a proteger, não engessar.
 
@@ -224,6 +229,11 @@ Pergunta:
 
 - stack: `java-spring`
 - componente: `backend-api`
+
+### Caso: aplicação web em Next.js
+
+- stack: `nextjs`
+- componente: `frontend-web`
 
 ### Caso: frontend em React com API em Python
 

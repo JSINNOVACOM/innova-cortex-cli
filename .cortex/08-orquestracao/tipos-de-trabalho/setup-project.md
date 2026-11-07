@@ -15,6 +15,8 @@ Relacionado a:
 - [agente-planejador](../../02-agentes/agente-planejador.md)
 - [skill-mapear-contexto](../../03-skills/skill-mapear-contexto.md)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md)
+- [template-fundacao-visual](../../04-templates/template-fundacao-visual.md)
 - [novo-projeto](novo-projeto.md)
 - [criterios-base](../criterios-de-entrada-e-saida/criterios-base.md)
 
@@ -83,6 +85,7 @@ Antes de considerar o fluxo bem executado, o sistema deve conseguir responder mi
 - o Git foi verificado? está inicializado com aprovação ou a exceção está registrada?
 - o `.gitignore` está adequado para a estrutura do projeto?
 - o projeto consegue ser executado localmente em estado mínimo?
+- se o projeto tem interface, a fundação visual existe ou a dispensa está registrada?
 - onde a continuidade do trabalho está registrada?
 
 ---
@@ -107,6 +110,7 @@ A ordem mais comum é:
 As skills mais comuns para este tipo de trabalho são:
 
 - [skill-mapear-contexto](../../03-skills/skill-mapear-contexto.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md) (somente projeto com interface)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md) (etapa de fechamento)
 
 ---
@@ -191,7 +195,26 @@ A ausência de Git deve ser registrada como exceção explícita, não tratada c
 
 ---
 
-### Etapa 6: validação de execução mínima e atualização de continuidade
+### Etapa 6: fundação visual (somente projeto com interface)
+
+Objetivo:  
+garantir que a primeira tela do projeto já nasça de uma direção visual aprovada pelo dono, e não do zero.
+
+Aplicar o momento A da [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md):
+
+- instalar as ferramentas do trilho com aprovação do usuário, depois de ler o `SKILL.md` de cada uma, com versões fixadas
+- gerar o `PRODUCT.md` com `/impeccable init`, a partir de `docs/business/domain-overview.md`
+- propor direções visuais em maquete e obter a aprovação do dono
+- transformar a direção aprovada em tokens, componentes e padrões de layout
+- registrar a fundação em `docs/design/design-system.md`, a partir do [template-fundacao-visual](../../04-templates/template-fundacao-visual.md)
+- capturar as referências de medida em `docs/design/referencia/`
+
+Se o projeto não tem interface, pular esta etapa e registrar isso em `memory/project-context.md`.  
+Se o dono dispensar a fundação, registrar a exceção e o motivo em `memory/project-context.md`.
+
+---
+
+### Etapa 7: validação de execução mínima e atualização de continuidade
 
 Objetivo:  
 confirmar que o projeto está tecnicamente pronto para receber desenvolvimento e registrar esse estado.
@@ -205,7 +228,7 @@ Deve produzir:
 
 ---
 
-### Etapa 7: validação de fechamento (OBRIGATÓRIA)
+### Etapa 8: validação de fechamento (OBRIGATÓRIA)
 
 **Status:** hard-required. Workflow NÃO pode ser declarado concluído sem este passo.
 
@@ -237,6 +260,7 @@ Este fluxo só deve ser considerado minimamente concluído quando existir:
 - Git verificado, inicializado com aprovação explícita ou exceção registrada
 - `.gitignore` adequado à estrutura do projeto (Check 5 da skill aplicado)
 - validação mínima de execução concluída
+- em projeto com interface: fundação visual registrada em `docs/design/` ou dispensa registrada
 - status e handoff atualizados com o estado técnico alcançado
 - validação de fechamento executada (todos os 6 checks da skill)
 - ⚠ Workflow não é considerado concluído sem relatório da skill (mesmo se vazio).
@@ -296,6 +320,7 @@ Há desvio quando:
 - nenhuma lacuna técnica é registrada
 - o status e o handoff não são atualizados
 - o fluxo começa a criar feature no meio do setup
+- projeto com interface sai do setup sem fundação visual e sem dispensa registrada
 
 ---
 

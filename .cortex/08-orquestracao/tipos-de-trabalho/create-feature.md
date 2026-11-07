@@ -17,6 +17,8 @@ Relacionado a:
 - [skill-mapear-contexto](../../03-skills/skill-mapear-contexto.md)
 - [skill-revisar-documento](../../03-skills/skill-revisar-documento.md)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md)
+- [quality-gate-interface](../../10-padroes-tecnicos/quality-gates/quality-gate-interface.md)
 - memoria-operacional (registro interno, não publicado no OSS)
 - pendencias (registro interno, não publicado no OSS)
 - [criterios-base](../criterios-de-entrada-e-saida/criterios-base.md)
@@ -100,6 +102,7 @@ As skills mais comuns para este tipo de trabalho são:
 
 - [skill-mapear-contexto](../../03-skills/skill-mapear-contexto.md)
 - [skill-revisar-documento](../../03-skills/skill-revisar-documento.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md) (quando a feature cria ou muda uma tela)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md) (etapa de fechamento)
 
 ---
@@ -118,6 +121,7 @@ Deve produzir:
 - critério mínimo de aceitação
 - restrições conhecidas
 - dúvidas que precisam ser resolvidas antes de avançar
+- se a feature cria ou muda uma tela
 
 Se a demanda ainda estiver ambígua demais para ser chamada de feature delimitada, não avançar. Solicitar clarificação ao usuário.
 
@@ -150,6 +154,13 @@ Deve verificar:
 
 Se não houver padrão técnico aplicável, registrar essa ausência explicitamente.
 
+Se a feature cria ou muda uma tela, verificar também:
+
+- a fundação visual do projeto em `docs/design/design-system.md` (direção aprovada, tokens, componentes, padrões de layout)
+- o [quality-gate-interface](../../10-padroes-tecnicos/quality-gates/quality-gate-interface.md)
+
+Sem fundação visual, a feature não implementa tela: primeiro executar o momento A da [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md), salvo dispensa do dono registrada.
+
 ---
 
 ### Etapa 4: plano de implementação
@@ -164,6 +175,7 @@ Deve produzir:
 - dependências entre as partes
 - critério mínimo de validação
 - o que não deve ser alterado nesta feature
+- quando houver tela: maquete aprovada pelo dono dentro da direção existente, e as peças que o sistema precisa ganhar antes da tela (momento B da [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md))
 
 Alterações relevantes de código, estrutura ou dependência devem ser apresentadas ao usuário nesta etapa e aguardar aprovação antes de avançar para implementação.
 
@@ -197,6 +209,7 @@ Deve produzir:
 - resultado de build, lint e testes quando aplicável à stack
 - registro de comportamentos inesperados encontrados
 - decisão sobre o que ficou fora do escopo desta feature
+- quando houver tela: evidência do [quality-gate-interface](../../10-padroes-tecnicos/quality-gates/quality-gate-interface.md) (capturas comparadas com a maquete, medidas, revisões) e percurso do dono no navegador
 
 ---
 
@@ -246,6 +259,7 @@ Este fluxo só deve ser considerado minimamente concluído quando existir:
 - descrição clara da feature implementada
 - evidência de que o comportamento esperado foi alcançado
 - resultado de build, lint e testes registrado, quando aplicável à stack
+- quando houver tela: maquete aprovada e evidência de medida registradas
 - status e handoff atualizados
 - o que ficou fora do escopo registrado
 - validação de fechamento executada (Checks 1, 2, 3, 4, 6 da skill)
@@ -263,6 +277,7 @@ Este fluxo pode começar quando houver pelo menos:
 - demanda delimitada o suficiente para ser chamada de feature
 - contexto local acessível para consulta
 - autorização para alterar código do projeto
+- quando a feature cria ou muda uma tela: fundação visual existente em `docs/design/` ou dispensa do dono registrada
 
 ---
 

@@ -19,6 +19,7 @@ Relacionado a:
 - [skill-mapear-contexto](../../03-skills/skill-mapear-contexto.md)
 - [skill-revisar-documento](../../03-skills/skill-revisar-documento.md)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md)
 - memoria-operacional (registro interno, não publicado no OSS)
 - pendencias (registro interno, não publicado no OSS)
 
@@ -176,6 +177,9 @@ Deve explicitar:
 - dúvidas em aberto
 - riscos iniciais
 - limites percebidos
+- se o projeto tem interface (telas usadas por pessoas), registrado em `memory/project-context.md`
+
+Projeto com interface passa pela fundação visual no [setup-project](setup-project.md), antes da primeira tela (ver [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md)).
 
 ---
 

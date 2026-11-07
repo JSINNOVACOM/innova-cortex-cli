@@ -15,6 +15,8 @@ Relacionado a:
 - [skill-mapear-contexto](../../03-skills/skill-mapear-contexto.md)
 - [skill-revisar-documento](../../03-skills/skill-revisar-documento.md)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md)
+- [template-plano-de-interface](../../04-templates/template-plano-de-interface.md)
 - memoria-operacional (registro interno, não publicado no OSS)
 - pendencias (registro interno, não publicado no OSS)
 - [roteamento-basico](../roteamento/roteamento-basico.md)
@@ -96,6 +98,7 @@ A ordem mais comum é:
 As skills mais comuns para este tipo de trabalho são:
 - [skill-mapear-contexto](../../03-skills/skill-mapear-contexto.md)
 - [skill-revisar-documento](../../03-skills/skill-revisar-documento.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md) (modernização de interface)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md) (etapa de fechamento)
 
 ---
@@ -173,6 +176,8 @@ Deve deixar claro:
 - qual validação mínima precisa existir
 - como detectar regressão ou impacto indesejado
 - onde parar se a mudança começar a expandir escopo
+
+Quando a refatoração é uma modernização de interface (telas existentes sem fundação visual, ou mudança de identidade), o plano segue o momento C da [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md) e é registrado em `docs/design/plano-de-interface.md`, a partir do [template-plano-de-interface](../../04-templates/template-plano-de-interface.md): fundação sem mudança visível, peças comuns, casca, identidade, telas e auditoria final.
 
 ---
 

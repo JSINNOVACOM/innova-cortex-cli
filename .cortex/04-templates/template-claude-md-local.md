@@ -47,7 +47,7 @@ As regras de trabalho, critérios, fluxos, padrões e demais instruções devem 
 Este projeto segue a regra P11.1 do Cortex. Por default, ficam **fora do Git**:
 
 - `.claude/`, `tasks/`, `node_modules/`, `logs/`, `AGENTS.md`, `*.pyc`, `__pycache__/`, `.DS_Store` (sem decisão a tomar)
-- `docs/`, `memory/` (default ignorado; pode versionar arquivo específico via regra negativa explícita, ex: `!docs/business/domain-overview.md`)
+- `docs/`, `memory/` (default ignorado; para versionar parte da pasta, trocar a entrada por `docs/*` ou `memory/*` e acrescentar a regra negativa, ex: `!docs/design/`)
 
 Por default, **entram no Git**:
 

@@ -94,6 +94,8 @@ Procedimento:
    memory/
    ```
 
+   Para estas duas, a forma `docs/*` (ou `memory/*`) **também conta como presente**. É a forma que o projeto precisa usar quando versiona parte da pasta: com `docs/`, o Git ignora a pasta inteira e não aplica regras negativas dentro dela. Não sugerir `docs/` quando `docs/*` já existe.
+
 3. Para cada entrada faltante, listar no relatório **agrupada por grupo de origem**:
    - **Grupo "sem decisão a tomar"** (8 entradas) — listar como bloco "Fora do Git por default":
      ```
@@ -103,9 +105,9 @@ Procedimento:
      ```
      docs/, memory/
      ```
-   A distinção visual evita que o adopter assuma que `docs/` e `memory/` viraram bloqueados — eles continuam permitindo exceções via `!docs/foo.md` ou `!memory/bar.md`.
+   A distinção visual evita que o adopter assuma que `docs/` e `memory/` viraram bloqueados — eles continuam permitindo exceções por regra negativa, desde que a entrada seja `docs/*` ou `memory/*` (ver `01-regras/04-estrutura-documental-de-projetos.md`, seção "Proteção mínima com `.gitignore`").
 4. Perguntar ao adopter: `Adicionar as entradas faltantes ao .gitignore? [s/N]`
-5. Se "s", anexar as entradas faltantes ao arquivo (idempotente — não duplica linha existente, preserva conteúdo original, mantém comentários). **Ao anexar entradas do grupo "com permissão"** (`docs/` e/ou `memory/`), registrar nota curta em `docs/context/current-status.md` lembrando que arquivos específicos dessas pastas podem ser versionados via regra negativa explícita (ex: `!docs/business/domain-overview.md`).
+5. Se "s", anexar as entradas faltantes ao arquivo (idempotente — não duplica linha existente, preserva conteúdo original, mantém comentários). **Ao anexar entradas do grupo "com permissão"** (`docs/` e/ou `memory/`), registrar nota curta em `docs/context/current-status.md` lembrando que partes dessas pastas podem ser versionadas trocando a entrada por `docs/*` (ou `memory/*`) e acrescentando a regra negativa (ex.: `!docs/design/`).
 6. Se "n", registrar como pendência aceita em `docs/context/current-status.md`.
 
 Este check **não é hard-block** sobre conteúdo do `.gitignore` — adopter pode recusar e seguir. O hard-block é apenas a execução da skill em si.

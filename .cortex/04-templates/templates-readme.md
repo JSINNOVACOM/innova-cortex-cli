@@ -17,6 +17,9 @@ Relacionado a:
 - [template-handoff](template-handoff.md)
 - [template-padrao-tecnico](template-padrao-tecnico.md)
 - [template-claude-md-local](template-claude-md-local.md)
+- [template-fundacao-visual](template-fundacao-visual.md)
+- [template-plano-de-interface](template-plano-de-interface.md)
+- [skill-trilho-de-interface](../03-skills/skill-trilho-de-interface.md)
 
 ---
 
@@ -170,6 +173,33 @@ Usar para:
 
 Cria no `.cortex/`:
 - `10-padroes-tecnicos/stacks/<nome>.md` (ou subpasta equivalente)
+
+---
+
+### 8. [template-fundacao-visual](template-fundacao-visual.md)
+Usar para (somente projetos com interface):
+- registrar a direção visual aprovada pelo dono
+- apontar onde vivem tokens e componentes
+- fixar padrões de layout e critérios de medida
+- registrar extensões do sistema e telas aprovadas
+
+Cria no projeto:
+- `docs/design/design-system.md`
+
+Usado no momento A (fundação visual) da [skill-trilho-de-interface](../03-skills/skill-trilho-de-interface.md).
+
+---
+
+### 9. [template-plano-de-interface](template-plano-de-interface.md)
+Usar para (somente projetos com interface):
+- planejar a modernização de telas existentes em etapas
+- definir o papel de cada ferramenta do trilho por etapa
+- registrar critérios de conclusão por etapa
+
+Cria no projeto:
+- `docs/design/plano-de-interface.md`
+
+Usado no momento C (modernização) da [skill-trilho-de-interface](../03-skills/skill-trilho-de-interface.md), dentro do fluxo [refatoracao](../08-orquestracao/tipos-de-trabalho/refatoracao.md).
 
 ---
 

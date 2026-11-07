@@ -21,6 +21,7 @@ Relacionado a:
 - [learn-simple](../08-orquestracao/tipos-de-trabalho/learn-simple.md)
 - [cortex-spec-flow](../08-orquestracao/tipos-de-trabalho/cortex-spec-flow.md)
 - [skill-cortex-spec-flow](skill-cortex-spec-flow.md)
+- [skill-trilho-de-interface](skill-trilho-de-interface.md)
 
 ---
 
@@ -214,6 +215,22 @@ Dispara se **qualquer uma** das condições for verdadeira:
 > Detectei sinais de trabalho de spec/produto ("vamos pensar primeiro", "regras de negócio"). Quer acionar **Cortex Spec Flow** pra estruturar a spec antes de partir pra Create Feature?
 
 Cortex Spec Flow é **opcional** — sugestão respeita autonomia do adopter, que pode preferir ir direto a Create Feature.
+
+### Para propor o trilho de interface ([skill-trilho-de-interface](skill-trilho-de-interface.md))
+
+Não é um workflow: é a skill que faz telas nascerem da fundação visual. A sugestão aparece dentro do workflow em curso.
+
+Dispara se **qualquer uma** das condições for verdadeira:
+
+- a fatia cria ou muda uma tela e o projeto não tem `docs/design/design-system.md` nem dispensa registrada em `memory/project-context.md`;
+- o diff de uma tela introduz cor, espaçamento ou tamanho fixo fora dos tokens do projeto, ou um componente novo criado dentro da tela, fora do sistema;
+- uma tela vai ser implementada sem maquete aprovada em `docs/design/telas/`.
+
+**Justificativa típica:**
+
+> Esta fatia cria a tela `<tela>`, mas o projeto ainda não tem fundação visual em `docs/design/`. Quer montar a fundação (direção aprovada, tokens e componentes) antes, para a tela já nascer coerente?
+
+Obedece `--no-suggest` e cooldown como as demais.
 
 ---
 

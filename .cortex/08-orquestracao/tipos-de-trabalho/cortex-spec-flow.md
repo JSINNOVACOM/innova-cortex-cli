@@ -15,6 +15,7 @@ Relacionado a:
 - [skill-cortex-spec-flow](../../03-skills/skill-cortex-spec-flow.md)
 - [skill-validar-encerramento](../../03-skills/skill-validar-encerramento.md)
 - [skill-detectar-workflow-relevante](../../03-skills/skill-detectar-workflow-relevante.md)
+- [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md)
 - [create-feature](create-feature.md)
 - [session-handoff](session-handoff.md)
 
@@ -107,6 +108,15 @@ Começam no modo Guiado. Modo Exploração captura livre, sem ID obrigatório. F
 - `DEC-01`, `DEC-02`, ... — decisões
 
 IDs são únicos por spec (não cross-spec). Numeração crescente, sem reuso após descarte.
+
+### Specs com tela
+
+Quando uma spec cria ou muda uma tela, a tela nasce coerente com a fundação visual do projeto (`docs/design/`), conforme a [skill-trilho-de-interface](../../03-skills/skill-trilho-de-interface.md):
+
+- toda `TASK-XX` que cria ou muda tela nasce com o critério "maquete aprovada pelo dono, dentro da direção visual existente, antes do código";
+- os critérios de aceite (`CRIT-XX`) dessa tela incluem o [quality-gate-interface](../../10-padroes-tecnicos/quality-gates/quality-gate-interface.md);
+- se a tela pedir uma direção visual diferente da aprovada, isso vira decisão (`DEC-XX`) a levar ao dono, e não premissa da task;
+- se o projeto ainda não tem fundação visual, a primeira task de tela é criá-la (momento A da skill).
 
 ---
 

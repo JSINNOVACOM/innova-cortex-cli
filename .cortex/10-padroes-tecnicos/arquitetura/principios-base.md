@@ -307,6 +307,7 @@ Stacks específicas detalham como aplicar esses princípios em tecnologias concr
 
 Exemplo:
 - `react-typescript.md` detalha a stack React + TypeScript
+- `nextjs.md` detalha a stack Next.js
 - `java-spring.md` pode detalhar a stack Java + Spring
 
 Este arquivo continua acima desse nível.

@@ -11,6 +11,7 @@ Definir padrões técnicos iniciais para projetos que utilizem React com TypeScr
 - [03-checklist-de-qualidade](../../01-regras/03-checklist-de-qualidade.md)
 - memoria-operacional (registro interno, não publicado no OSS)
 - pendencias (registro interno, não publicado no OSS)
+- [quality-gate-interface](../quality-gates/quality-gate-interface.md)
 
 ## Princípio central
 
@@ -176,6 +177,8 @@ Esta stack normalmente se relaciona com: [10-padroes-tecnicos/componentes/fronte
 ## Relação com quality gates
 
 Esta stack deve conseguir atender, no mínimo, o: [10-padroes-tecnicos/quality-gates/quality-gate-base.md](../quality-gates/quality-gate-base.md)
+
+Em fatias que criam ou mudam telas, também o [quality-gate-interface](../quality-gates/quality-gate-interface.md).
 
 ---
 

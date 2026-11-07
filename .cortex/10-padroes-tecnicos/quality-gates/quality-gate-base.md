@@ -11,6 +11,7 @@ Relacionado a:
 - [03-checklist-de-qualidade](../../01-regras/03-checklist-de-qualidade.md)
 - memoria-operacional (registro interno, não publicado no OSS)
 - pendencias (registro interno, não publicado no OSS)
+- [quality-gate-interface](quality-gate-interface.md)
 
 ---
 
@@ -264,6 +265,10 @@ Exemplo:
 - uma integração pode exigir validação contratual mais rigorosa
 
 Mas esses refinamentos devem nascer depois, não agora.
+
+Gate específico já existente:
+
+- [quality-gate-interface](quality-gate-interface.md): coerência com a fundação visual, acessibilidade e responsividade medidas, para fatias que criam ou mudam telas.
 
 ---
 
