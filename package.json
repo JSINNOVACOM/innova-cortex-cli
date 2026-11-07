@@ -4,7 +4,7 @@
   "description": "CLI que instala e versiona o .cortex/ (governança Innova Cortex) em projetos adopters.",
   "type": "module",
   "bin": {
-    "innova-cortex": "./bin/cli.js"
+    "innova-cortex": "bin/cli.js"
   },
   "engines": {
     "node": ">=20"
