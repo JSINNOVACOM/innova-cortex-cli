@@ -71,7 +71,7 @@ Instala o `.cortex/` no diretório de destino (o atual, se `caminho` for omitido
 npx innova-cortex init
 
 # fixa numa release específica (reprodutível)
-npx innova-cortex init --ref v0.3.0
+npx innova-cortex init --ref v0.4.0
 
 # já preenche nome e objetivo no CLAUDE.md
 npx innova-cortex init --name "meu-projeto" --objective "API de cobranças"
@@ -108,8 +108,8 @@ Gravado ao final do `init`, em YAML, versionado no Git do seu projeto:
 
 ```yaml
 source: <origem>
-ref: v0.3.0
-commit: b9bdd90
+ref: v0.4.0
+commit: 465f5e2
 installed_at: 2026-06-06T10:23:00Z
 cli_version: 0.2.1
 ```
