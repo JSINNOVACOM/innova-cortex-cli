@@ -6,14 +6,14 @@ Estado vivo do projeto: o que está pronto, em andamento, pendente e qual é o p
 - **Projeto:** innova-cortex-cli
 - **Documento:** current-status
 - **Estado:** em desenvolvimento
-- **Última atualização:** 2026-06-08 (publicação npm 0.2.1)
+- **Última atualização:** 2026-11-07 (publicação npm 0.2.2)
 - **Responsável:** Jonathan
 
 ---
 
 ## 1. Resumo do momento atual
 
-Init Project (entrega `init`) **concluído e PUBLICADO**: `innova-cortex@0.2.1` está no npm (CI Windows verde, `npm publish --access public` OK em 2026-06-08). `npx innova-cortex` funciona para adopters. Inclui `LICENSE` MIT (Copyright JSINNOVACOM) + metadados npm (`author`/`repository`/`bugs`/`homepage`). `node --test` verde (66/66). Próximo movimento: **TASK-13 (`doctor`)**.
+Init Project (entrega `init`) **concluído e PUBLICADO**: `innova-cortex@0.2.2` é a `latest` no npm desde 2026-11-07 (a 0.2.1 saiu em 2026-06-08). A 0.2.2 republica o README (aviso contra `npm install`, exemplos na v0.4.0 do Cortex) e corrige o `bin` para o npm 12; o código do `init` é o mesmo. `.cortex/` do projeto atualizado para a v0.4.0 do Cortex. `npx innova-cortex` funciona para adopters (conferido com `npx innova-cortex@0.2.2 init` em pasta limpa). Inclui `LICENSE` MIT (Copyright JSINNOVACOM) + metadados npm (`author`/`repository`/`bugs`/`homepage`). `node --test` verde (66/66). Próximo movimento: **TASK-13 (`doctor`)**.
 
 ---
 
@@ -28,7 +28,7 @@ Init Project (entrega `init`) **concluído e PUBLICADO**: `innova-cortex@0.2.1` 
 
 ## 3. O que está em andamento
 
-- Nada em andamento — `init` publicado (`innova-cortex@0.2.1`). Pronto para iniciar TASK-13 (`doctor`).
+- Nada em andamento — `init` publicado (`innova-cortex@0.2.2`). Pronto para iniciar TASK-13 (`doctor`).
 
 ---
 
@@ -43,14 +43,14 @@ Init Project (entrega `init`) **concluído e PUBLICADO**: `innova-cortex@0.2.1` 
 ## 5. Prioridades do momento
 
 1. TASK-13: `doctor` — leitura do `VERSION` + `ls-remote` + diff de arquivos modificados localmente.
-2. (Opcional) automatizar `npm publish` no CI usando o Automation Token já criado.
+2. (Opcional) automatizar `npm publish` no CI. O Automation Token antigo deixou de valer; seria preciso um granular access token com bypass de 2FA, guardado como secret do GitHub Actions.
 
 ---
 
 ## 6. Bloqueios atuais
 
 - Nenhum bloqueio para iniciar a TASK-13.
-- **Pendência de republicação:** aviso "não use `npm install`" foi adicionado ao README (commit `12e7fdc`) mas a página do npm só atualiza com novo publish. Embarcar na próxima versão (`0.2.2`+) junto com TASK-13.
+- **Resolvida (2026-11-07):** a pendência de republicação do README (aviso contra `npm install`, commit `12e7fdc`) saiu na 0.2.2.
 - **Pendência aceita:** spec ainda usa rótulos internos "v0.2/v0.3"; DEC-08 aposentou esses rótulos públicos ("CLI — `init`" / "CLI — `doctor`/`update`"). Não corrigir a spec aqui (canônica no vault — DEC-10); apenas usar a nomenclatura nova no projeto.
 - **Resolvida (2026-06-05):** a referência forward a `bin/cli.js` foi criada pela TASK-01 — não há mais pendência de Check 2.
 
